@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 import pickle
 import numpy as np
+import base64
 from fpdf import FPDF
 
 # ------------------ PAGE CONFIG ------------------
@@ -11,90 +12,7 @@ st.set_page_config(
     layout="centered"
 )
 
-st.markdown("""
-<style>
 
-/* ================= BACKGROUND WITH MEDICAL ICONS ================= */
-.stApp {
-    background-color: #000000;
-    background-image: url("data:image/svg+xml;utf8,
-    <svg xmlns='http://www.w3.org/2000/svg' width='200' height='200' viewBox='0 0 200 200'>
-        <g fill='none' stroke='rgba(255,255,255,0.08)' stroke-width='2'>
-            <path d='M40 20 v30 h-10 v20 h10 v30 h20 v-30 h10 v-20 h-10 v-30z'/>
-            <circle cx='150' cy='50' r='15'/>
-            <path d='M130 120 h40 v10 h-40z'/>
-            <path d='M60 150 l20 -20 l20 20'/>
-            <circle cx='150' cy='150' r='10'/>
-        </g>
-    </svg>");
-    background-repeat: repeat;
-    background-size: 180px;
-    font-family: 'Segoe UI', sans-serif;
-}
-
-/* ================= GLASS EFFECT MAIN CONTAINER ================= */
-.block-container {
-    background: rgba(15, 15, 15, 0.7);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-radius: 20px;
-    padding: 2rem;
-}
-
-/* ================= HEADINGS ================= */
-h1 {
-    color: #ffffff !important;
-    font-weight: 700;
-}
-
-h2, h3, h4, h5 {
-    color: #e5e5e5 !important;
-    font-weight: 600;
-}
-
-/* ================= TEXT ================= */
-p, label, span {
-    color: #dcdcdc !important;
-}
-
-/* ================= INPUT FIELDS ================= */
-input, textarea, select {
-    background-color: rgba(30,30,30,0.95) !important;
-    color: #ffffff !important;
-    border-radius: 10px !important;
-    border: 1px solid #333333 !important;
-}
-
-/* ================= BUTTON ================= */
-.stButton > button {
-    background: linear-gradient(135deg, #4facfe, #00f2fe);
-    color: #000000;
-    font-weight: 700;
-    border-radius: 14px;
-    padding: 0.6em 1.8em;
-    border: none;
-}
-
-.stButton > button:hover {
-    transform: scale(1.03);
-}
-
-/* ================= SIDEBAR ================= */
-section[data-testid="stSidebar"] {
-    background-color: rgba(5,5,5,0.95);
-}
-
-section[data-testid="stSidebar"] * {
-    color: #ffffff !important;
-}
-
-/* ================= REMOVE WHITE HEADER ================= */
-div[data-testid="stHeader"] {
-    background: transparent !important;
-}
-
-</style>
-""", unsafe_allow_html=True)
 # ------------------ LOAD MODEL ------------------
 with open("rf_model.pkl", "rb") as model_file:
     rfc = pickle.load(model_file)
@@ -141,7 +59,7 @@ def show_recipe_table():
 
 def diabetic_recommendations():
     st.warning("🍽️ Recommended Diet for Diabetic Patient")
-    st.markdown("""
+    st.markdown(""":orange-badge[
     - 🥦 Green vegetables (spinach, broccoli)
     - 🍎 Low sugar fruits (apple, berries, guava)
     - 🌾 Whole grains (brown rice, oats)
@@ -151,7 +69,7 @@ def diabetic_recommendations():
     ❌ Avoid:
     - Sugary foods & drinks
     - White bread, white rice
-    - Fried & junk foods
+    - Fried & junk foods]
     """)
 
     st.info("🩺 Healthcare & Lifestyle Tips")
